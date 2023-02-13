@@ -284,11 +284,12 @@ describe("PUT /booking/:bookingId", () => {
       const hotel = await createHotel();
       const room = await createRoomWithHotelId(hotel.id);
       const booking = await createBooking(room.id, user.id);
+      const otherRoom = await createRoomWithHotelId(hotel.id);
 
-      const response = await server.put(`/booking/${booking.id}`).set("Authorization", `Bearer ${token}`).send({ roomId: room.id });
+      const response = await server.put(`/booking/${booking.id}`).set("Authorization", `Bearer ${token}`).send({ roomId: otherRoom.id });
       expect(response.status).toBe(httpStatus.OK);
       expect(response.body).toEqual({
-        bookingId: expect.any(Number)
+        bookingId: expect.any(Number) 
       });
     });
   });
